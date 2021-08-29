@@ -1,0 +1,26 @@
+[
+  {
+    "field": "id",
+    "title": "Id",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "size",
+    "title": "Size",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "edit",
+    "title": "edit",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  }
+]

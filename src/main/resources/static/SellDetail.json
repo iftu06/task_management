@@ -1,0 +1,26 @@
+[
+  {
+    "field": "id",
+    "title": "Id",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "discount",
+    "title": "Discount",
+    "type": "numeric",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "quantity",
+    "title": "Quantity",
+    "type": "numeric",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  }
+]

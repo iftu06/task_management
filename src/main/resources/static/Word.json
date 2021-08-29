@@ -1,0 +1,18 @@
+[
+  {
+    "field": "id",
+    "title": "Id",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "word",
+    "title": "Word",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  }
+]

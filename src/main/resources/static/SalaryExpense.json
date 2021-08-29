@@ -1,0 +1,66 @@
+[
+  {
+    "field": "id",
+    "title": "Id",
+    "type": "text",
+    "display": "true",
+    "visbility": "false",
+    "renderer": "text"
+  },
+  {
+    "field": "amount",
+    "title": "Amount",
+    "type": "numeric",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "employee.id",
+    "title": "Employee Id",
+    "type": "text",
+    "display": "true",
+    "visbility": "false",
+    "renderer": "text"
+  },
+  {
+    "field": "employee.name",
+    "title": "Employee Name",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "payType.id",
+    "title": "Pay Type Id",
+    "type": "text",
+    "display": "true",
+    "visbility": "false",
+    "renderer": "text"
+  },
+  {
+    "field": "payType.type",
+    "title": "Pay Type",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "shop.id",
+    "title": "Shop Id ",
+    "type": "text",
+    "display": "true",
+    "visbility": "false",
+    "renderer": "text"
+  },
+  {
+    "field": "shop.name",
+    "title": "Shop  ",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  }
+]

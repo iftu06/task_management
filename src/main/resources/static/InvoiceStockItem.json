@@ -1,0 +1,114 @@
+[
+  {
+    "field": "id",
+    "title": "Id",
+    "type": "numeric",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "invoice.id",
+    "title": "Invoice Id",
+    "type": "numeric",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "invoice.customer.id",
+    "title": "Customer Id",
+    "type": "numeric",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "invoice.customer.name",
+    "title": "Customer Name",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "invoice.customer.mobile",
+    "title": "Customer Mobile",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "invoice.customer.address",
+    "title": "Customer Address",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "stockItem.id",
+    "title": "StockItem Id",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "stockItem.buyingPrice",
+    "title": "Buying Price",
+    "type": "numeric",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "stockItem.sellingPrice",
+    "title": "Selling Price",
+    "type": "numeric",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "stockItem.productSize",
+    "title": "Product Size",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "stockItem.stockStatus",
+    "title": "Stock Statuds",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "stockItem.stock.id",
+    "title": "Stock Id",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "stockItem.category.id",
+    "title": "Category Id",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  },
+  {
+    "field": "stockItem.category.name",
+    "title": "Category Name",
+    "type": "text",
+    "display": "true",
+    "visbility": "true",
+    "renderer": "text"
+  }
+]
