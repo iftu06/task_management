@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -34,11 +35,15 @@ public class TaskController {
 
     @CrossOrigin
     @PostMapping(value = "/tasks")
-    public Object save(@RequestBody Task task, BindingResult res) throws Exception {
+    public Object save(@RequestBody Task task, BindingResult res) {
 
         taskValidator.validate(task, res);
         if (res.hasErrors()) {
-            return ErrorMapper.mapError(res.getFieldErrors());
+            Map<String,String> errorMap = ErrorMapper.mapError(res.getFieldErrors());
+            return ApiResponse.builder().body(errorMap)
+                    .status(ReturnStatus.ERROR)
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .build();
         }
 
         try {

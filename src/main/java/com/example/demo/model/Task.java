@@ -46,7 +46,7 @@ public class Task {
     this.description = description;
   }
 
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne()
   @JoinColumn(name = "project_id")
   @JsonIgnoreProperties("tasks")
   public Project getProject() {
