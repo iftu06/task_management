@@ -44,20 +44,19 @@ public class TaskServiceImpl implements TaskService {
     private final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 
-
     @Transactional
     public TaskDto save(Task task) {
         UserDetails user = (UserDetails) authentication.getPrincipal();
-        if(task.getId() == null) {
+        if (task.getId() == null) {
             task.setCreatedBy(user.getUsername());
-            task.setUpdateddBy(user.getUsername());
-        }else{
+            task.setUpdatedBy(user.getUsername());
+        } else {
             task.setCreatedBy(user.getUsername());
             String userName = UserUtil.getUserName();
             Optional<Task> taskOpt = taskRepository.findById(task.getId());
-            if(taskOpt.isPresent()){
+            if (taskOpt.isPresent()) {
                 Task taskDb = taskOpt.get();
-                if(!taskDb.getCreatedBy().equals(userName) && !UserUtil.isAdmin()){
+                if (!taskDb.getCreatedBy().equals(userName) && !UserUtil.isAdmin()) {
                     throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
                 }
             }
@@ -66,21 +65,20 @@ public class TaskServiceImpl implements TaskService {
         return TaskDto.convertToDto(persistenceTask);
     }
 
-    public TaskDto getTask(Integer taskId){
+    public TaskDto getTask(Integer taskId) {
         String userName = UserUtil.getUserName();
-        List<String> authorities = UserUtil.getAuthorities();
         Optional<Task> task = taskRepository.findById(taskId);
 
-        if(!task.isPresent()){
+        if (!task.isPresent()) {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
         }
 
-        if(authorities.contains("ADMIN")){
+        if (UserUtil.isAdmin()) {
             return TaskDto.convertToDto(task.get());
-        }else{
+        } else {
             String taskCreatedBy = task.get().getCreatedBy();
-            if(!taskCreatedBy.equals(userName)){
-                new HttpClientErrorException(HttpStatus.FORBIDDEN);
+            if (!taskCreatedBy.equals(userName)) {
+                throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
             }
         }
 
@@ -90,11 +88,10 @@ public class TaskServiceImpl implements TaskService {
 
     public List<TaskDto> getAllTasks() {
         String userName = UserUtil.getUserName();
-        List<String> authorities = UserUtil.getAuthorities();
         List<Task> tasks = new ArrayList<>();
-        if(authorities.contains("ADMIN")){
+        if (UserUtil.isAdmin()) {
             tasks = taskRepository.findAll();
-        }else{
+        } else {
             tasks = taskRepository.findByCreatedBy(userName);
         }
 
@@ -102,23 +99,47 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
-    public void remove(Integer id) {
-        taskRepository.deleteById(id);
+
+    public void remove(Integer taskId) {
+        Optional<Task> task = taskRepository.findById(taskId);
+
+        if (!task.isPresent()) {
+            throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+        }
+
+        if (!UserUtil.isAdmin()) {
+            String taskCreatedBy = task.get().getCreatedBy();
+            String userName = UserUtil.getUserName();
+            if (!taskCreatedBy.equals(userName)) {
+                throw new HttpClientErrorException(HttpStatus.FORBIDDEN);
+            }
+        }
+
+        taskRepository.deleteById(taskId);
     }
 
     @Override
-    public List<TaskDto> getTasksByProject(Integer proectId) {
-        List<Task> tasks = taskRepository.findByProjectId(proectId);
+    public List<TaskDto> getTasksByProject(Integer projectId) {
+        List<Task> tasks = new ArrayList<>();
+        if (UserUtil.isAdmin()) {
+            tasks = taskRepository.findByProjectId(projectId);
+        } else {
+            String userName = UserUtil.getUserName();
+            tasks = taskRepository.findByCreatedByAndProjectId(userName, projectId);
+        }
         return !tasks.isEmpty() ? TaskDto.convertToDto(tasks) : new ArrayList<TaskDto>();
     }
 
-    public Object getSearchedTask(TaskSeachField seachField) {
-
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Task> cq = cb.createQuery(Task.class);
-
-        Root<Task> task = cq.from(Task.class);
+    private List<Predicate> getPredicates(TaskSeachField seachField,
+                                          CriteriaBuilder cb,
+                                          CriteriaQuery cq) {
         List<Predicate> predicates = new ArrayList<>();
+        Root<Task> task = cq.from(Task.class);
+
+        if (!UserUtil.isAdmin()) {
+            String userName = UserUtil.getUserName();
+            predicates.add(cb.equal(task.get("createdBy"), userName));
+        }
 
         if (!StringUtils.isEmpty(seachField.getStatus())) {
             predicates.add(cb.equal(task.get("status"), seachField.getStatus()));
@@ -131,11 +152,21 @@ public class TaskServiceImpl implements TaskService {
             final LocalDate dueDate = DateTimeUtil.parseDate(DateTimeFormatter.ofPattern("yyyy-MM-dd"), seachField.getDueDate());
             predicates.add(cb.lessThan(task.get("dueDate"), dueDate));
         }
+        return predicates;
+    }
 
+    public List<TaskDto> searchTask(TaskSeachField seachField) {
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Task> cq = cb.createQuery(Task.class);
+
+        List<Predicate> predicates = getPredicates(seachField, cb, cq);
 
         cq.where(predicates.toArray(new Predicate[0]));
 
-        return em.createQuery(cq).getResultList();
+        List<Task> tasks = em.createQuery(cq).getResultList();
+
+        return TaskDto.convertToDto(tasks);
 
     }
 

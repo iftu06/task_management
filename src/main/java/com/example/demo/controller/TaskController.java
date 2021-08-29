@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.Utillity.ApiResponse;
 import com.example.demo.Utillity.ErrorMapper;
+import com.example.demo.Utillity.TaskSeachField;
 import com.example.demo.Validate.TaskValidator;
 import com.example.demo.error.ReturnStatus;
 import com.example.demo.exception.ResourceNotFoundException;
@@ -46,16 +47,17 @@ public class TaskController {
                     .body(ApiResponse.builder().body(taskDto)
                             .httpStatus(HttpStatus.CREATED)
                             .status(ReturnStatus.SUCCESS)
+                            .message("Task Created Successfully")
                             .build());
         } catch (HttpClientErrorException exp) {
 
-            if(exp.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
+            if (exp.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
                 return ApiResponse.builder()
                         .status(ReturnStatus.ERROR)
                         .httpStatus(HttpStatus.FORBIDDEN)
                         .message("You are not authorized to access the resource")
                         .build();
-            }else{
+            } else {
                 return ApiResponse.builder()
                         .status(ReturnStatus.ERROR)
                         .httpStatus(HttpStatus.NOT_IMPLEMENTED)
@@ -96,19 +98,19 @@ public class TaskController {
                     .httpStatus(HttpStatus.FOUND).build();
 
         } catch (HttpClientErrorException exp) {
-            if(exp.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+            if (exp.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 return ApiResponse.builder()
                         .status(ReturnStatus.ERROR)
                         .httpStatus(HttpStatus.NOT_FOUND)
                         .message("Resource is not found")
                         .build();
-            }else if(exp.getStatusCode().equals(HttpStatus.FORBIDDEN)){
+            } else if (exp.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
                 return ApiResponse.builder()
                         .status(ReturnStatus.ERROR)
                         .httpStatus(HttpStatus.FORBIDDEN)
                         .message("You are not authorized to access the resource")
                         .build();
-            }else{
+            } else {
                 return ApiResponse.builder()
                         .status(ReturnStatus.ERROR)
                         .httpStatus(HttpStatus.NOT_IMPLEMENTED)
@@ -121,22 +123,49 @@ public class TaskController {
 
     @CrossOrigin
     @GetMapping(value = "/task/delete/{id}")
-    //@PreAuthorize("hasRole('ROLE_USER')")
     public Object delete(@PathVariable Integer id) throws Exception {
         try {
             taskService.remove(id);
-            return ResponseEntity.ok().body("Task Deleted Successfully");
-        } catch (Exception exp) {
-            return ResponseEntity.badRequest().body("Something wrong.Please try again");
+        } catch (HttpClientErrorException exp) {
+            if (exp.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
+                return ApiResponse.builder()
+                        .status(ReturnStatus.ERROR)
+                        .httpStatus(HttpStatus.FORBIDDEN)
+                        .message("You are not authorized to access the resource")
+                        .build();
+            } else {
+                return ApiResponse.builder()
+                        .status(ReturnStatus.ERROR)
+                        .httpStatus(HttpStatus.NOT_IMPLEMENTED)
+                        .message("Reason Unknown")
+                        .build();
+            }
         }
+
+        return ApiResponse.builder()
+                .status(ReturnStatus.SUCCESS)
+                .httpStatus(HttpStatus.NO_CONTENT)
+                .message("Successfully deleted")
+                .build();
+
     }
 
 
     @CrossOrigin
     @RequestMapping(value = "/project/{projectId}/tasks", method = RequestMethod.GET)
-    //@PreAuthorize("hasRole('ROLE_USER')")
     public ApiResponse getAllTaskByProect(@PathVariable Integer projectId) throws Exception {
         List<TaskDto> tasks = taskService.getTasksByProject(projectId);
+        return ApiResponse.builder().httpStatus(HttpStatus.FOUND)
+                .status(ReturnStatus.SUCCESS)
+                .body(tasks)
+                .build();
+
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
+    public ApiResponse searchTask(TaskSeachField seachField) {
+        List<TaskDto> tasks = taskService.searchTask(seachField);
         return ApiResponse.builder().httpStatus(HttpStatus.FOUND)
                 .status(ReturnStatus.SUCCESS)
                 .body(tasks)

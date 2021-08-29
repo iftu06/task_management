@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.Utillity.TaskSeachField;
 import com.example.demo.model.Task;
 import dto.TaskDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TaskService {
 
@@ -17,4 +17,6 @@ public interface TaskService {
     public void remove(Integer id);
 
     public List<TaskDto> getTasksByProject(Integer id);
+
+    public List<TaskDto> searchTask(TaskSeachField seachField);
 }

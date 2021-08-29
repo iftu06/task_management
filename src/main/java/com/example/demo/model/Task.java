@@ -25,7 +25,7 @@ public class Task {
 
   private String createdBy;
 
-  private String updateddBy;
+  private String updatedBy;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -82,11 +82,11 @@ public class Task {
     this.createdBy = createdBy;
   }
 
-  public String getUpdateddBy() {
-    return updateddBy;
+  public String getUpdatedBy() {
+    return updatedBy;
   }
 
-  public void setUpdateddBy(String updateddBy) {
-    this.updateddBy = updateddBy;
+  public void setUpdatedBy(String updatedBy) {
+    this.updatedBy = updatedBy;
   }
 }

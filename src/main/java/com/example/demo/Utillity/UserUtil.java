@@ -28,4 +28,8 @@ public class UserUtil {
         return authorities.contains("ADMIN");
     }
 
+    public static UserDetails getPrincipal(){
+        return (UserDetails) authentication.getPrincipal();
+    }
+
 }

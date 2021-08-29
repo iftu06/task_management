@@ -19,4 +19,6 @@ public interface ProjectRepository extends CrudRepository<Project,Integer> {
     @Query(value = "select t from Project t where t.id = ?1  ")
     public Project findProject (Integer id);
 
+    List<Project> findByCreatedBy(String userName);
+
 }

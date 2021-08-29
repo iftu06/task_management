@@ -1,14 +1,20 @@
 package com.example.demo.controller;
 
+import com.example.demo.Utillity.ApiResponse;
 import com.example.demo.Utillity.ErrorMapper;
+import com.example.demo.error.ReturnStatus;
 import com.example.demo.model.Project;
 import com.example.demo.service.ProjectService;
+import dto.ProjectDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by Divineit-Iftekher on 8/8/2017.
@@ -22,7 +28,6 @@ public class ProjectController {
 
     @CrossOrigin
     @PostMapping(value = "/project")
-    //@PreAuthorize("hasRole('ROLE_USER')")
     public Object save(@Valid @RequestBody Project project, BindingResult res) throws Exception {
 
         if (res.hasErrors()) {
@@ -30,45 +35,110 @@ public class ProjectController {
         }
 
         try {
-            projectService.save(project);
-            return ResponseEntity.ok("Project saved successfully");
-        } catch (Exception exp) {
-            exp.printStackTrace();
-            return ResponseEntity.badRequest().body("Something wrong");
+            ProjectDto projectDto = projectService.save(project);
+            return ResponseEntity.ok()
+                    .body(ApiResponse.builder().body(projectDto)
+                            .httpStatus(HttpStatus.CREATED)
+                            .status(ReturnStatus.SUCCESS)
+                            .message("Project Created Successfully")
+                            .build());
+        } catch (HttpClientErrorException exp) {
+            if (exp.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
+                return ApiResponse.builder()
+                        .status(ReturnStatus.ERROR)
+                        .httpStatus(HttpStatus.FORBIDDEN)
+                        .message("You are not authorized to access the resource")
+                        .build();
+            } else {
+                return ApiResponse.builder()
+                        .status(ReturnStatus.ERROR)
+                        .httpStatus(HttpStatus.NOT_IMPLEMENTED)
+                        .message("Reason Unknown")
+                        .build();
+            }
         }
 
     }
 
     @CrossOrigin
     @RequestMapping(value = "/projects", method = RequestMethod.GET)
-    //@PreAuthorize("hasRole('ROLE_USER')")
-    public Object list() throws Exception {
-        return projectService.getProjects();
+    public Object list() {
+        try {
+            List<ProjectDto> projects = projectService.getProjects();
+            return ApiResponse.builder()
+                    .httpStatus(HttpStatus.FOUND)
+                    .status(ReturnStatus.SUCCESS)
+                    .body(projects)
+                    .build();
+        } catch (HttpClientErrorException exp) {
+            return ApiResponse.builder()
+                    .status(ReturnStatus.ERROR)
+                    .httpStatus(HttpStatus.NOT_FOUND)
+                    .build();
+        }
     }
 
     @CrossOrigin
     @GetMapping(value = "/projects/{id}")
-    //@PreAuthorize("hasRole('ROLE_USER')")
-    public Object list(@PathVariable Integer id) throws Exception {
-        Project project = projectService.getProject(id);
-        if (project != null) {
-            return ResponseEntity.ok(project);
-        } else {
-            return ResponseEntity.badRequest().body("Not Found");
+    public Object list(@PathVariable Integer id) {
+        try {
+            ProjectDto project = projectService.getProject(id);
+            return ApiResponse.builder()
+                    .body(project).status(ReturnStatus.SUCCESS)
+                    .httpStatus(HttpStatus.FOUND).build();
+
+        } catch (HttpClientErrorException exp) {
+            if (exp.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+                return ApiResponse.builder()
+                        .status(ReturnStatus.ERROR)
+                        .httpStatus(HttpStatus.NOT_FOUND)
+                        .message("Resource is not found")
+                        .build();
+            } else if (exp.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
+                return ApiResponse.builder()
+                        .status(ReturnStatus.ERROR)
+                        .httpStatus(HttpStatus.FORBIDDEN)
+                        .message("You are not authorized to access the resource")
+                        .build();
+            } else {
+                return ApiResponse.builder()
+                        .status(ReturnStatus.ERROR)
+                        .httpStatus(HttpStatus.NOT_IMPLEMENTED)
+                        .message("Reason Unknown")
+                        .build();
+            }
         }
+
     }
 
 
     @CrossOrigin
     @DeleteMapping(value = "/project/delete/{id}")
-    //@PreAuthorize("hasRole('ROLE_USER')")
-    public Object delete(@PathVariable Integer id) throws Exception {
+    public Object delete(@PathVariable Integer id) {
         try {
             projectService.remove(id);
-            return ResponseEntity.ok().body("Project Deleted Successfully");
-        } catch (Exception exp) {
-            return ResponseEntity.badRequest().body("Something wrong.Please try again");
+        } catch (HttpClientErrorException exp) {
+            if (exp.getStatusCode().equals(HttpStatus.FORBIDDEN)) {
+                return ApiResponse.builder()
+                        .status(ReturnStatus.ERROR)
+                        .httpStatus(HttpStatus.FORBIDDEN)
+                        .message("You are not authorized to access the resource")
+                        .build();
+            } else {
+                return ApiResponse.builder()
+                        .status(ReturnStatus.ERROR)
+                        .httpStatus(HttpStatus.NOT_IMPLEMENTED)
+                        .message("Reason Unknown")
+                        .build();
+            }
         }
+
+        return ApiResponse.builder()
+                .status(ReturnStatus.SUCCESS)
+                .httpStatus(HttpStatus.NO_CONTENT)
+                .message("Successfully deleted")
+                .build();
+
     }
 
 

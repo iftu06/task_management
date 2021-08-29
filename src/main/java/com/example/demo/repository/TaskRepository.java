@@ -25,4 +25,6 @@ public interface TaskRepository extends CrudRepository<Task,Integer> {
 
     List<Task> findByCreatedBy(String createdBy);
 
+    List<Task> findByCreatedByAndProjectId(String userName,Integer projectId);
+
 }
