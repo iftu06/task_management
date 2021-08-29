@@ -123,7 +123,7 @@ public class TaskController {
 
     @CrossOrigin
     @GetMapping(value = "/task/delete/{id}")
-    public Object delete(@PathVariable Integer id) throws Exception {
+    public ApiResponse delete(@PathVariable Integer id) throws Exception {
         try {
             taskService.remove(id);
         } catch (HttpClientErrorException exp) {
@@ -163,7 +163,7 @@ public class TaskController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
+    @RequestMapping(value = "/tasks/search", method = RequestMethod.GET)
     public ApiResponse searchTask(TaskSeachField seachField) {
         List<TaskDto> tasks = taskService.searchTask(seachField);
         return ApiResponse.builder().httpStatus(HttpStatus.FOUND)

@@ -9,18 +9,17 @@ import java.util.stream.Collectors;
 
 public class UserUtil {
 
-    private static final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
     public static List<String> getAuthorities(){
-        UserDetails user = (UserDetails) authentication.getPrincipal();
-        return user.getAuthorities().stream()
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
                 .map(grantedAuthority -> grantedAuthority.getAuthority())
                 .collect(Collectors.toList());
     }
 
     public static String getUserName(){
-        UserDetails user = (UserDetails) authentication.getPrincipal();
-        return user.getUsername();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return  (String) authentication.getPrincipal();
     }
 
     public static boolean isAdmin(){
@@ -28,8 +27,8 @@ public class UserUtil {
         return authorities.contains("ADMIN");
     }
 
-    public static UserDetails getPrincipal(){
-        return (UserDetails) authentication.getPrincipal();
-    }
+//    public static UserDetails getPrincipal(){
+//        return (UserDetails) authentication.getPrincipal();
+//    }
 
 }

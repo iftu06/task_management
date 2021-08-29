@@ -28,14 +28,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Transactional
     public ProjectDto save(Project project) {
-        UserDetails user = UserUtil.getPrincipal();
+        String userName = UserUtil.getUserName();
 
         if (project.getId() == null) {
-            project.setCreatedBy(user.getUsername());
-            project.setUpdatedBy(user.getUsername());
+            project.setCreatedBy(userName);
+            project.setUpdatedBy(userName);
         } else {
-            project.setCreatedBy(user.getUsername());
-            String userName = UserUtil.getUserName();
+            project.setCreatedBy(userName);
             Optional<Project> projectOpt = projectRepository.findById(project.getId());
             if (projectOpt.isPresent()) {
                 Project projectDb = projectOpt.get();

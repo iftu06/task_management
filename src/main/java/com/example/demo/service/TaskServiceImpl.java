@@ -46,13 +46,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Transactional
     public TaskDto save(Task task) {
-        UserDetails user = (UserDetails) authentication.getPrincipal();
+        String userName = UserUtil.getUserName();
         if (task.getId() == null) {
-            task.setCreatedBy(user.getUsername());
-            task.setUpdatedBy(user.getUsername());
+            task.setCreatedBy(userName);
+            task.setUpdatedBy(userName);
         } else {
-            task.setCreatedBy(user.getUsername());
-            String userName = UserUtil.getUserName();
+            task.setCreatedBy(userName);
             Optional<Task> taskOpt = taskRepository.findById(task.getId());
             if (taskOpt.isPresent()) {
                 Task taskDb = taskOpt.get();
@@ -145,7 +144,7 @@ public class TaskServiceImpl implements TaskService {
             predicates.add(cb.equal(task.get("status"), seachField.getStatus()));
         }
         if (seachField.getProjectId() != null) {
-            predicates.add(cb.equal(task.get("project.id"), seachField.getProjectId()));
+            predicates.add(cb.equal(task.get("project").get("id"), seachField.getProjectId()));
         }
 
         if (!StringUtils.isEmpty(seachField.getDueDate())) {
