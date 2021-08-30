@@ -60,6 +60,12 @@ public class TaskController {
                         .httpStatus(HttpStatus.FORBIDDEN)
                         .message("You are not authorized to access the resource")
                         .build();
+            } else if (exp.getStatusCode().equals(HttpStatus.BAD_REQUEST)){
+                return ApiResponse.builder()
+                        .status(ReturnStatus.ERROR)
+                        .httpStatus(HttpStatus.BAD_REQUEST)
+                        .message("Your request is not valid")
+                        .build();
             } else {
                 return ApiResponse.builder()
                         .status(ReturnStatus.ERROR)

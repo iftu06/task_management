@@ -4,7 +4,9 @@ import com.example.demo.Utillity.DateTimeUtil;
 import com.example.demo.Utillity.TaskSeachField;
 import com.example.demo.Utillity.UserUtil;
 import com.example.demo.dto.TaskDto;
+import com.example.demo.model.Project;
 import com.example.demo.model.Task;
+import com.example.demo.repository.ProjectRepository;
 import com.example.demo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,10 +41,19 @@ public class TaskServiceImpl implements TaskService {
     TaskRepository taskRepository;
 
     @Autowired
+    ProjectRepository projectRepository;
+
+    @Autowired
     EntityManager em;
 
     private final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+
+    private boolean isVaLidProject(Integer projectId){
+        Optional<Project> project = projectRepository.findById(projectId);
+
+        return project.isPresent() ? true : false;
+    }
 
     @Transactional
     public TaskDto save(Task task) {
@@ -63,6 +74,11 @@ public class TaskServiceImpl implements TaskService {
                 }
             }
         }
+
+        if(!isVaLidProject(task.getProject().getId())){
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+        }
+
         Task persistenceTask = taskRepository.save(task);
         if(isNewTask){
             em.refresh(persistenceTask);
