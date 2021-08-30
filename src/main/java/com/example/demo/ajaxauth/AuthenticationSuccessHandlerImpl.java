@@ -34,10 +34,9 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
         User userDetails = (User) jwtAuthenticationToken.getPrincipal();
         String accessToken = jwtUtil.createJwtToken(userDetails);
-        String refreshToken = jwtUtil.createRefreshToken(userDetails);
+        //String refreshToken = jwtUtil.createRefreshToken(userDetails);
         Map tokenMap = new HashMap();
         tokenMap.put("token", SecurityConstants.TOKEN_PREFIX + accessToken);
-        tokenMap.put("refreshToken", SecurityConstants.TOKEN_PREFIX + refreshToken);
 
 
         mapper.writeValue(response.getWriter(), tokenMap);

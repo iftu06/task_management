@@ -37,8 +37,10 @@ public class TaskValidator implements Validator {
         if (task.getId() != null) {
             Optional<Task> existingTask = taskRepository.findById(task.getId());
             if (existingTask.isPresent() && existingTask.get().getStatus().equalsIgnoreCase("close")) {
-                errors.rejectValue("status", "close", new Object[]{"'status'"}, "Closed status can not be edited");
+                errors.rejectValue("status", "close", new Object[]{"'status'"}, "Closed Task can not be edited");
             }
         }
     }
 }
+
+

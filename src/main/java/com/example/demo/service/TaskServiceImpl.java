@@ -47,11 +47,14 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public TaskDto save(Task task) {
         String userName = UserUtil.getUserName();
+        boolean isNewTask = true;
         if (task.getId() == null) {
             task.setCreatedBy(userName);
             task.setUpdatedBy(userName);
         } else {
+            isNewTask = false;
             task.setCreatedBy(userName);
+            task.setUpdatedBy(userName);
             Optional<Task> taskOpt = taskRepository.findById(task.getId());
             if (taskOpt.isPresent()) {
                 Task taskDb = taskOpt.get();
@@ -61,6 +64,10 @@ public class TaskServiceImpl implements TaskService {
             }
         }
         Task persistenceTask = taskRepository.save(task);
+        if(isNewTask){
+            em.refresh(persistenceTask);
+        }
+
         return TaskDto.convertToDto(persistenceTask);
     }
 

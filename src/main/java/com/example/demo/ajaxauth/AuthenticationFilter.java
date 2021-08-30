@@ -51,12 +51,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     LoginRequest loginRequest =objectMapper.readValue(request.getReader(), LoginRequest.class);
 
-    if (StringUtils.isEmpty(loginRequest.getEmail()) || StringUtils.isEmpty(loginRequest.getPassword())) {
+    if (StringUtils.isEmpty(loginRequest.getUserName()) || StringUtils.isEmpty(loginRequest.getPassword())) {
       throw new AuthenticationServiceException("Username or password is not provided");
     }
 
     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-            = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword());
+            = new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),loginRequest.getPassword());
 
     return this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 

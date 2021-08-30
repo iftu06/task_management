@@ -41,7 +41,7 @@ public class Project {
     this.name = name;
   }
 
-  @OneToMany()
+  @OneToMany(mappedBy = "project")
   public List<Task> getTasks() {
     return tasks;
   }

@@ -15,6 +15,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Divineit-Iftekher on 8/8/2017.
@@ -27,11 +28,15 @@ public class ProjectController {
     ProjectService projectService;
 
     @CrossOrigin
-    @PostMapping(value = "/project")
+    @PostMapping(value = "/projects")
     public Object save(@Valid @RequestBody Project project, BindingResult res) throws Exception {
 
         if (res.hasErrors()) {
-            return ErrorMapper.mapError(res.getFieldErrors());
+            Map<String,String> errorMap = ErrorMapper.mapError(res.getFieldErrors());
+            return ApiResponse.builder().body(errorMap)
+                    .status(ReturnStatus.ERROR)
+                    .httpStatus(HttpStatus.BAD_REQUEST)
+                    .build();
         }
 
         try {
@@ -113,7 +118,7 @@ public class ProjectController {
 
 
     @CrossOrigin
-    @DeleteMapping(value = "/project/delete/{id}")
+    @DeleteMapping(value = "/projects/delete/{id}")
     public Object delete(@PathVariable Integer id) {
         try {
             projectService.remove(id);

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Data
 @Builder
-public class TaskDto {
+public class TaskDtoAfterSave {
 
     private Integer id;
 
@@ -23,13 +23,13 @@ public class TaskDto {
 
     private String status;
 
-    public static TaskDto convertToDto(Task task) {
+    public static TaskDtoAfterSave convertToDto(Task task) {
         String dueDate = null;
         if (task.getDueDate() != null) {
             dueDate = DateTimeUtil.formateDate(DateTimeFormatter.ofPattern("yyyy-MM-dd"), task.getDueDate());
         }
 
-        return TaskDto.builder()
+        return TaskDtoAfterSave.builder()
                 .id(task.getId())
                 .description(task.getDescription())
                 .dueDate(dueDate)
@@ -39,11 +39,26 @@ public class TaskDto {
 
     }
 
-    public static List<TaskDto> convertToDto(List<Task> tasks) {
-
+    public static List<TaskDtoAfterSave> convertToDto(List<Task> tasks) {
         return tasks.stream()
                 .map(task -> convertToDto(task))
                 .collect(Collectors.toList());
+
+    }
+
+    public static TaskDtoAfterSave convertToDtoAfterSave(Task task) {
+        String dueDate = null;
+        if (task.getDueDate() != null) {
+            dueDate = DateTimeUtil.formateDate(DateTimeFormatter.ofPattern("yyyy-MM-dd"), task.getDueDate());
+        }
+        return TaskDtoAfterSave.builder()
+                .id(task.getId())
+                .description(task.getDescription())
+                .dueDate(dueDate)
+                .status(task.getStatus())
+                .build();
+
+
     }
 
 }

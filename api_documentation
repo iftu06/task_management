@@ -1,0 +1,398 @@
+
+Login to generate jwt token:
+URL : localhost:8095/login
+METHOD: POST
+
+	Request Body:
+
+		{
+			"userName" : "mainul",
+			"password" : "123"
+		}
+	Response:
+		{"token":"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYWludWwiLCJzY29wZXMiOlsiVVNFUiJdLCJleHAiOjE2MzAzMjQ5MTB9.duUKC2utTl1k-S0TyjZblcLjkhN71aK6W9L267tOYMZZeI5a2tOptiQ42VrG8vc52-qWunZG_g4ufl7QGT4-0w"}
+
+
+Creating Project:
+URL : localhost:8095/projects
+METHOD: POST
+
+	Request Body:
+
+		{
+
+			"name" : "Task Management"
+
+		}
+
+	Response Body:
+
+		{
+		    "httpStatus": "CREATED",
+		    "body": {
+			"name": "Task Management"
+		    },
+		    "status": "SUCCESS",
+		    "message": "Project Created Successfully"
+		}
+
+	Validation Error when Name is Empty:
+
+		{
+		    "httpStatus": "BAD_REQUEST",
+		    "body": {
+			"name": "Name can not be empty"
+		    },
+		    "status": "ERROR",
+		    "message": null
+		}
+
+
+
+
+Updating Project:
+URL : localhost:8095/projects
+METHOD: POST
+
+	Request Body:
+
+		{
+
+			"id" : "5",
+			"name" : "Task Management"
+
+		}
+	
+	Response Body:
+
+		{
+		    "httpStatus": "CREATED",
+		    "body": {
+			"name": "Task Management"
+		    },
+		    "status": "SUCCESS",
+		    "message": "Project Created Successfully"
+		}
+
+	
+	UnAnuthorized user try to update the projetc:
+
+		{
+		    "httpStatus": "FORBIDDEN",
+		    "body": null,
+		    "status": "ERROR",
+		    "message": "You are not authorized to access the resource"
+		}
+
+
+Get All Project:
+URL:localhost:8095/projects
+METHOD: GET
+Description: Admin user will be able fetch all the project but user will be able to fetch his created one
+
+
+	{
+	    "httpStatus": "FOUND",
+	    "body": [
+		{
+		    "name": "Webstore v2 v3"
+		},
+		{
+		    "name": "Webstore v2"
+		},
+		{
+		    "name": "Task Management"
+		},
+		{
+		    "name": "Task Management"
+		}
+	    ],
+	    "status": "SUCCESS",
+	    "message": null
+	}
+
+Get Project By Project Id:
+URL:localhost:8095/projects/4
+METHOD: GET
+Description: Admin user will be able fetch all the project but user will be able to fetch his created one
+
+	Response
+		{
+		    "httpStatus": "FOUND",
+		    "body": {
+			"name": "Task Management"
+		    },
+		    "status": "SUCCESS",
+		    "message": null
+		}
+
+
+Delete Project:
+URL:localhost:8095//projects/delete/5
+METHOD: DELETE
+Description: Admin Will be able to delete any project but user will only be able to delete his
+
+	Response body
+		{
+		    "httpStatus": "NO_CONTENT",
+		    "body": null,
+		    "status": "SUCCESS",
+		    "message": "Successfully deleted"
+		}
+
+	UnAnuthorized user try to update the projetc:
+		{
+		    "httpStatus": "FORBIDDEN",
+		    "body": null,
+		    "status": "ERROR",
+		    "message": "You are not authorized to access the resource"
+		}
+
+
+
+Creating Taks:
+URL : localhost:8095/tasks
+METHOD: POST
+
+	Request Body:
+
+		{
+			"description" : "Create Profile",
+			"project" : {
+				"id" : 3	
+			},
+
+			"status" : "in_progress",
+			"dueDate" : "2021-01-02"
+
+		}
+
+	Response Body:
+
+		{
+		    "httpStatus": "CREATED",
+		    "body": {
+			"id": 32,
+			"description": "Create Profile",
+			"project": {
+			    "name": "Webstore v2 v3"
+			},
+			"dueDate": "2021-01-04",
+			"status": "open"
+		    },
+		    "status": "SUCCESS",
+		    "message": "Task Created Successfully"
+		}
+
+	Validation Error:
+
+		{
+		    "httpStatus": "BAD_REQUEST",
+		    "body": {
+			"description": "Description can not be  empty",
+			"status": "Status can not be empty"
+		    },
+		    "status": "ERROR",
+		    "message": null
+		}
+
+Update Task:
+URL : localhost:8095/tasks
+METHOD: POST
+
+	Request Body:
+
+		{
+			"id": 32,
+			"description" : "Change Profile",
+			"project" : {
+				"id" : 3	
+			},
+
+			"status" : "in_progress",
+			"dueDate" : "2021-01-05"
+		}
+
+	Response Body:
+
+		{
+		    "httpStatus": "CREATED",
+		    "body": {
+			"id": 32,
+			"description": "Change Profile",
+			"project": {
+			    "name": "Webstore v2 v3"
+			},
+			"dueDate": "2021-01-05",
+			"status": "in_progress"
+		    },
+		    "status": "SUCCESS",
+		    "message": "Task Created Successfully"
+		}
+	
+	Request to Update Close Task:
+		{
+		"id": 32,
+		"description" : "Change Profile",
+		"project" : {
+			"id" : 3	
+		},
+
+		"status" : "in_progress",
+		"dueDate" : "2021-01-05"
+
+		}
+       Response to Update Close Task:
+		{
+		    "httpStatus": "BAD_REQUEST",
+		    "body": {
+			"status": "Closed Task can not be edited"
+		    },
+		    "status": "ERROR",
+		    "message": null
+		}
+
+Get all Task:
+URL:localhost:8095/tasks/all
+Description : Admin can see all the task while user can only see his tasks.
+
+	Response body:
+
+		{
+		    "httpStatus": "FOUND",
+		    "body": [
+			{
+			    "id": 2,
+			    "description": "Delete User",
+			    "project": {
+				"name": "Webstore v2"
+			    },
+			    "dueDate": "2021-01-02",
+			    "status": "close"
+			},
+			{
+			    "id": 5,
+			    "description": "Create Profile",
+			    "project": {
+				"name": "Task Management"
+			    },
+			    "dueDate": "2021-01-01",
+			    "status": "open"
+			},
+			{
+			    "id": 7,
+			    "description": "Update User",
+			    "project": {
+				"name": "Webstore v2 v3"
+			    },
+			    "dueDate": "2021-01-02",
+			    "status": "close"
+			},
+			{
+			    "id": 32,
+			    "description": "Change Profile",
+			    "project": {
+				"name": "Webstore v2 v3"
+			    },
+			    "dueDate": "2021-01-05",
+			    "status": "close"
+			}
+		    ],
+		    "status": "SUCCESS",
+		    "message": null
+		}
+
+
+Search Task:
+URL:localhost:8095/tasks/search?dueDate=2021-02-01&&status=close&&projectId=3
+METHOD: GET
+Description : Admin can see all the task while user can only see his tasks
+
+	Response:
+		{
+		    "httpStatus": "FOUND",
+		    "body": [
+			{
+			    "id": 6,
+			    "description": "Delete User 1234599",
+			    "project": {
+				"name": "Webstore v2 v3"
+			    },
+			    "dueDate": "2021-01-02",
+			    "status": "close"
+			},
+			{
+			    "id": 7,
+			    "description": "Update User 1234599",
+			    "project": {
+				"name": "Webstore v2 v3"
+			    },
+			    "dueDate": "2021-01-02",
+			    "status": "close"
+			},
+			{
+			    "id": 32,
+			    "description": "Change Profile",
+			    "project": {
+				"name": "Webstore v2 v3"
+			    },
+			    "dueDate": "2021-01-05",
+			    "status": "close"
+			}
+		    ],
+		    "status": "SUCCESS",
+		    "message": null
+		}
+
+
+Get Task By Project Id:
+URL:localhost:8095/project/2/tasks
+METHOD: GET
+
+	Response:
+		{
+		    "httpStatus": "FOUND",
+		    "body": [
+			{
+			    "id": 1,
+			    "description": "Update user 123",
+			    "project": {
+				"name": "Webstore v2"
+			    },
+			    "dueDate": "2021-02-01",
+			    "status": "open"
+			},
+			{
+			    "id": 2,
+			    "description": "Delete User 1234",
+			    "project": {
+				"name": "Webstore v2"
+			    },
+			    "dueDate": "2021-01-02",
+			    "status": "close"
+			}
+		    ],
+		    "status": "SUCCESS",
+		    "message": null
+		}
+
+Get Task By Task Id:
+URL:localhost:8095/tasks/2
+METHOD: GET
+
+	{
+	    "httpStatus": "FOUND",
+	    "body": {
+		"id": 2,
+		"description": "Delete User 1234",
+		"project": {
+		    "name": "Webstore v2"
+		},
+		"dueDate": "2021-01-02",
+		"status": "close"
+	    },
+	    "status": "SUCCESS",
+	    "message": null
+	}
+
+

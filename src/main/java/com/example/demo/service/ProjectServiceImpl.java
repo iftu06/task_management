@@ -35,6 +35,7 @@ public class ProjectServiceImpl implements ProjectService {
             project.setUpdatedBy(userName);
         } else {
             project.setCreatedBy(userName);
+            project.setUpdatedBy(userName);
             Optional<Project> projectOpt = projectRepository.findById(project.getId());
             if (projectOpt.isPresent()) {
                 Project projectDb = projectOpt.get();

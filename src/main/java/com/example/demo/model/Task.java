@@ -46,9 +46,9 @@ public class Task {
     this.description = description;
   }
 
-  @ManyToOne()
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "project_id")
-  @JsonIgnoreProperties("tasks")
+  //@JsonIgnoreProperties("tasks")
   public Project getProject() {
     return project;
   }
