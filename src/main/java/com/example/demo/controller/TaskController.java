@@ -125,7 +125,7 @@ public class TaskController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/task/delete/{id}")
+    @DeleteMapping(value = "/tasks/delete/{id}")
     public ApiResponse delete(@PathVariable Integer id) throws Exception {
         try {
             taskService.remove(id);

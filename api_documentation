@@ -13,7 +13,7 @@ METHOD: POST
 		{"token":"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYWludWwiLCJzY29wZXMiOlsiVVNFUiJdLCJleHAiOjE2MzAzMjQ5MTB9.duUKC2utTl1k-S0TyjZblcLjkhN71aK6W9L267tOYMZZeI5a2tOptiQ42VrG8vc52-qWunZG_g4ufl7QGT4-0w"}
 
 
-Creating Project:
+Create Project:
 URL : localhost:8095/projects
 METHOD: POST
 
@@ -50,7 +50,7 @@ METHOD: POST
 
 
 
-Updating Project:
+Update Project:
 URL : localhost:8095/projects
 METHOD: POST
 
@@ -150,7 +150,7 @@ Description: Admin Will be able to delete any project but user will only be able
 
 
 
-Creating Taks:
+Create Taks:
 URL : localhost:8095/tasks
 METHOD: POST
 
@@ -242,6 +242,7 @@ METHOD: POST
 		"dueDate" : "2021-01-05"
 
 		}
+
        Response to Update Close Task:
 		{
 		    "httpStatus": "BAD_REQUEST",
@@ -396,3 +397,24 @@ METHOD: GET
 	}
 
 
+
+Delete Task:
+URL:localhost:8095/tasks/delete/1
+METHOD: DELETE
+Description: Admin Will be able to delete any task but user will only be able to delete his
+
+	Response body
+		{
+		    "httpStatus": "NO_CONTENT",
+		    "body": null,
+		    "status": "SUCCESS",
+		    "message": "Successfully deleted"
+		}
+
+	UnAnuthorized user try to update the projetc:
+		{
+		    "httpStatus": "FORBIDDEN",
+		    "body": null,
+		    "status": "ERROR",
+		    "message": "You are not authorized to access the resource"
+		}
