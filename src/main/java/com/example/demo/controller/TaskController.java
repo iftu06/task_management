@@ -4,11 +4,10 @@ import com.example.demo.Utillity.ApiResponse;
 import com.example.demo.Utillity.ErrorMapper;
 import com.example.demo.Utillity.TaskSeachField;
 import com.example.demo.Validate.TaskValidator;
+import com.example.demo.dto.TaskDto;
 import com.example.demo.error.ReturnStatus;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Task;
 import com.example.demo.service.TaskService;
-import dto.TaskDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by Divineit-Iftekher on 8/8/2017.

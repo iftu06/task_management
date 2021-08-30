@@ -2,10 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.Utillity.ApiResponse;
 import com.example.demo.Utillity.ErrorMapper;
+import com.example.demo.dto.ProjectDto;
 import com.example.demo.error.ReturnStatus;
 import com.example.demo.model.Project;
 import com.example.demo.service.ProjectService;
-import dto.ProjectDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

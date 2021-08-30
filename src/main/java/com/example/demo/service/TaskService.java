@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.Utillity.TaskSeachField;
+import com.example.demo.dto.TaskDto;
 import com.example.demo.model.Task;
-import dto.TaskDto;
 
 import java.util.List;
 
