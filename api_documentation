@@ -219,7 +219,7 @@ METHOD: POST
 		{
 			"description" : "Create Profile",
 			"project" : {
-				"id" : 3	
+				"id" : 3
 			},
 
 			"status" : "in_progress",
@@ -241,7 +241,21 @@ METHOD: POST
 			"status": "open"
 		    },
 		    "status": "SUCCESS",
-		    "message": "Task Created Successfully"
+		    "message": "Task Created Successfully",
+            "links": [
+                    {
+                        "link": "http://localhost:8095/tasks/32",
+                        "rel": "detail"
+                    },
+                    {
+                        "link": "http://localhost:8095/tasks/32",
+                        "rel": "update"
+                    },
+                    {
+                        "link": "http://localhost:8095/tasks/delete/32",
+                        "rel": "delete"
+                    }
+                ]
 		}
 
 	Validation Error:
@@ -286,7 +300,21 @@ METHOD: PUT
 			"status": "in_progress"
 		    },
 		    "status": "SUCCESS",
-		    "message": "Task Created Successfully"
+		    "message": "Task Updated Successfully",
+            "links": [
+                    {
+                        "link": "http://localhost:8095/tasks/13",
+                        "rel": "detail"
+                    },
+                    {
+                        "link": "http://localhost:8095/tasks/13",
+                        "rel": "update"
+                    },
+                    {
+                        "link": "http://localhost:8095/tasks/delete/13",
+                        "rel": "delete"
+                    }
+                ]
 		}
 	
 	Request to Update Close Task:
@@ -319,48 +347,59 @@ Description : Admin can see all the task while user can only see his tasks.
 	Response body:
 
 		{
-		    "httpStatus": "FOUND",
-		    "body": [
-			{
-			    "id": 2,
-			    "description": "Delete User",
-			    "project": {
-				"name": "Webstore v2"
-			    },
-			    "dueDate": "2021-01-02",
-			    "status": "close"
-			},
-			{
-			    "id": 5,
-			    "description": "Create Profile",
-			    "project": {
-				"name": "Task Management"
-			    },
-			    "dueDate": "2021-01-01",
-			    "status": "open"
-			},
-			{
-			    "id": 7,
-			    "description": "Update User",
-			    "project": {
-				"name": "Webstore v2 v3"
-			    },
-			    "dueDate": "2021-01-02",
-			    "status": "close"
-			},
-			{
-			    "id": 32,
-			    "description": "Change Profile",
-			    "project": {
-				"name": "Webstore v2 v3"
-			    },
-			    "dueDate": "2021-01-05",
-			    "status": "close"
-			}
-		    ],
-		    "status": "SUCCESS",
-		    "message": null
-		}
+            "httpStatus": "FOUND",
+            "body": [
+                {
+                    "id": 4,
+                    "description": "Delete Task",
+                    "project": {
+                        "name": "Task Managemnt 123"
+                    },
+                    "dueDate": "2021-01-05",
+                    "status": "open",
+                    "links": [
+                        {
+                            "link": "http://localhost:8095/tasks/4",
+                            "rel": "detail"
+                        },
+                        {
+                            "link": "http://localhost:8095/tasks/4",
+                            "rel": "update"
+                        },
+                        {
+                            "link": "http://localhost:8095/tasks/delete/4",
+                            "rel": "delete"
+                        }
+                    ]
+                },
+                {
+                    "id": 3,
+                    "description": "Change Task",
+                    "project": {
+                        "name": "Shop Management"
+                    },
+                    "dueDate": "2021-01-05",
+                    "status": "open",
+                    "links": [
+                        {
+                            "link": "http://localhost:8095/tasks/3",
+                            "rel": "detail"
+                        },
+                        {
+                            "link": "http://localhost:8095/tasks/3",
+                            "rel": "update"
+                        },
+                        {
+                            "link": "http://localhost:8095/tasks/delete/3",
+                            "rel": "delete"
+                        }
+                    ]
+                }
+
+            ],
+            "status": "SUCCESS",
+            "message": null
+        }
 
 
 Search Task:
@@ -369,41 +408,59 @@ METHOD: GET
 Description : Admin can see all the task while user can only see his tasks
 
 	Response:
-		{
-		    "httpStatus": "FOUND",
-		    "body": [
-			{
-			    "id": 6,
-			    "description": "Delete User 1234599",
-			    "project": {
-				"name": "Webstore v2 v3"
-			    },
-			    "dueDate": "2021-01-02",
-			    "status": "close"
-			},
-			{
-			    "id": 7,
-			    "description": "Update User 1234599",
-			    "project": {
-				"name": "Webstore v2 v3"
-			    },
-			    "dueDate": "2021-01-02",
-			    "status": "close"
-			},
-			{
-			    "id": 32,
-			    "description": "Change Profile",
-			    "project": {
-				"name": "Webstore v2 v3"
-			    },
-			    "dueDate": "2021-01-05",
-			    "status": "close"
-			}
-		    ],
-		    "status": "SUCCESS",
-		    "message": null
-		}
-
+	{
+        "httpStatus": "FOUND",
+        "body": [
+            {
+                "id": 3,
+                "description": "Change Task",
+                "project": {
+                    "name": "Shop Management"
+                },
+                "dueDate": "2021-01-05",
+                "status": "open",
+                "links": [
+                    {
+                        "link": "http://localhost:8095/tasks/3",
+                        "rel": "detail"
+                    },
+                    {
+                        "link": "http://localhost:8095/tasks/3",
+                        "rel": "update"
+                    },
+                    {
+                        "link": "http://localhost:8095/tasks/delete/3",
+                        "rel": "delete"
+                    }
+                ]
+            },
+            {
+                "id": 11,
+                "description": "Remove Shop1234",
+                "project": {
+                    "name": "Shop Management"
+                },
+                "dueDate": "2021-01-05",
+                "status": "open",
+                "links": [
+                    {
+                        "link": "http://localhost:8095/tasks/11",
+                        "rel": "detail"
+                    },
+                    {
+                        "link": "http://localhost:8095/tasks/11",
+                        "rel": "update"
+                    },
+                    {
+                        "link": "http://localhost:8095/tasks/delete/11",
+                        "rel": "delete"
+                    }
+                ]
+            }
+        ],
+        "status": "SUCCESS",
+        "message": null
+    }
 
 Get Task By Project Id:
 URL:localhost:8095/project/2/tasks
@@ -411,49 +468,91 @@ METHOD: GET
 
 	Response:
 		{
-		    "httpStatus": "FOUND",
-		    "body": [
-			{
-			    "id": 1,
-			    "description": "Update user 123",
-			    "project": {
-				"name": "Webstore v2"
-			    },
-			    "dueDate": "2021-02-01",
-			    "status": "open"
-			},
-			{
-			    "id": 2,
-			    "description": "Delete User 1234",
-			    "project": {
-				"name": "Webstore v2"
-			    },
-			    "dueDate": "2021-01-02",
-			    "status": "close"
-			}
-		    ],
-		    "status": "SUCCESS",
-		    "message": null
-		}
+            "httpStatus": "FOUND",
+            "body": [
+                {
+                    "id": 3,
+                    "description": "Change Task",
+                    "project": {
+                        "name": "Shop Management"
+                    },
+                    "dueDate": "2021-01-05",
+                    "status": "open",
+                    "links": [
+                        {
+                            "link": "http://localhost:8095/tasks/3",
+                            "rel": "detail"
+                        },
+                        {
+                            "link": "http://localhost:8095/tasks/3",
+                            "rel": "update"
+                        },
+                        {
+                            "link": "http://localhost:8095/tasks/delete/3",
+                            "rel": "delete"
+                        }
+                    ]
+                },
+                {
+                    "id": 11,
+                    "description": "Remove Shop1234",
+                    "project": {
+                        "name": "Shop Management"
+                    },
+                    "dueDate": "2021-01-05",
+                    "status": "open",
+                    "links": [
+                        {
+                            "link": "http://localhost:8095/tasks/11",
+                            "rel": "detail"
+                        },
+                        {
+                            "link": "http://localhost:8095/tasks/11",
+                            "rel": "update"
+                        },
+                        {
+                            "link": "http://localhost:8095/tasks/delete/11",
+                            "rel": "delete"
+                        }
+                    ]
+                }
+            ],
+            "status": "SUCCESS",
+            "message": null
+        }
 
 Get Task By Task Id:
 URL:localhost:8095/tasks/2
 METHOD: GET
 
-	{
-	    "httpStatus": "FOUND",
-	    "body": {
-		"id": 2,
-		"description": "Delete User 1234",
-		"project": {
-		    "name": "Webstore v2"
-		},
-		"dueDate": "2021-01-02",
-		"status": "close"
-	    },
-	    "status": "SUCCESS",
-	    "message": null
-	}
+        {
+            "httpStatus": "FOUND",
+            "body": {
+                "id": 13,
+                "description": "Create Manager",
+                "project": {
+                    "name": "Payroll Managemnt dd"
+                },
+                "dueDate": "2021-01-05",
+                "status": "open",
+                "links": [
+                    {
+                        "link": "http://localhost:8095/tasks/13",
+                        "rel": "detail"
+                    },
+                    {
+                        "link": "http://localhost:8095/tasks/13",
+                        "rel": "update"
+                    },
+                    {
+                        "link": "http://localhost:8095/tasks/delete/13",
+                        "rel": "delete"
+                    }
+                ]
+            },
+            "status": "SUCCESS",
+            "message": null
+        }
 
 
 

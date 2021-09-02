@@ -188,6 +188,7 @@ public class TaskController {
     public Object update(@RequestBody Task task, @PathVariable Integer id,
                          BindingResult res) {
 
+        task.setId(id);
         taskValidator.validate(task, res);
         if (res.hasErrors()) {
             Map<String, String> errorMap = ErrorMapper.mapError(res.getFieldErrors());
@@ -199,7 +200,6 @@ public class TaskController {
 
         try {
             TaskDto existingTask = taskService.getTask(id);
-            task.setId(id);
             TaskDto taskDto = taskService.save(task);
             return ResponseEntity.ok()
                     .body(ApiResponse.builder().body(taskDto)
