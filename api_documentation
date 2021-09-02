@@ -33,7 +33,21 @@ METHOD: POST
 			"name": "Task Management"
 		    },
 		    "status": "SUCCESS",
-		    "message": "Project Created Successfully"
+		    "message": "Project Created Successfully",
+            "links": [
+                            {
+                                "link": "http://localhost:8095/projects/5",
+                                "rel": "detail"
+                            },
+                            {
+                                "link": "http://localhost:8095/projects/5",
+                                "rel": "update"
+                            },
+                            {
+                                "link": "http://localhost:8095/projects/delete/5",
+                                "rel": "delete"
+                            }
+                    ]
 		}
 
 	Validation Error when Name is Empty:
@@ -67,7 +81,21 @@ METHOD: PUT
 			"name": "Task Management"
 		    },
 		    "status": "SUCCESS",
-		    "message": "Project Created Successfully"
+		    "message": "Project Created Successfully",
+            "links": [
+                        {
+                            "link": "http://localhost:8095/projects/5",
+                            "rel": "detail"
+                        },
+                        {
+                            "link": "http://localhost:8095/projects/5",
+                            "rel": "update"
+                        },
+                        {
+                            "link": "http://localhost:8095/projects/delete/5",
+                            "rel": "delete"
+                        }
+                ]
 		}
 
 	UnAnuthorized user try to update the projetc:
@@ -87,24 +115,47 @@ Description: Admin user will be able fetch all the project but user will be able
 
 
 	{
-	    "httpStatus": "FOUND",
-	    "body": [
-		{
-		    "name": "Webstore v2 v3"
-		},
-		{
-		    "name": "Webstore v2"
-		},
-		{
-		    "name": "Task Management"
-		},
-		{
-		    "name": "Task Management"
-		}
-	    ],
-	    "status": "SUCCESS",
-	    "message": null
-	}
+        "httpStatus": "FOUND",
+        "body": [
+            {
+                "name": "Task Management",
+                "links": [
+                    {
+                        "link": "http://localhost:8095/projects/1",
+                        "rel": "detail"
+                    },
+                    {
+                        "link": "http://localhost:8095/projects/1",
+                        "rel": "update"
+                    },
+                    {
+                        "link": "http://localhost:8095/projects/delete/1",
+                        "rel": "delete"
+                    }
+                ]
+            },
+            {
+                "name": "Shop Management",
+                "links": [
+                    {
+                        "link": "http://localhost:8095/projects/2",
+                        "rel": "detail"
+                    },
+                    {
+                        "link": "http://localhost:8095/projects/2",
+                        "rel": "update"
+                    },
+                    {
+                        "link": "http://localhost:8095/projects/delete/2",
+                        "rel": "delete"
+                    }
+                ]
+            }
+
+        ],
+        "status": "SUCCESS",
+        "message": null
+    }
 
 Get Project By Project Id:
 URL:localhost:8095/projects/4
@@ -118,7 +169,21 @@ Description: Admin user will be able fetch all the project but user will be able
 			"name": "Task Management"
 		    },
 		    "status": "SUCCESS",
-		    "message": null
+		    "message": null,
+            "links": [
+                        {
+                            "link": "http://localhost:8095/projects/4",
+                            "rel": "detail"
+                        },
+                        {
+                            "link": "http://localhost:8095/projects/4",
+                            "rel": "update"
+                        },
+                        {
+                            "link": "http://localhost:8095/projects/delete/4",
+                            "rel": "delete"
+                        }
+                    ]
 		}
 
 

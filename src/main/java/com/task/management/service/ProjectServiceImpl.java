@@ -5,6 +5,7 @@ import com.task.management.dto.ProjectDto;
 import com.task.management.model.Project;
 import com.task.management.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -22,6 +23,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     ProjectRepository projectRepository;
+
+    @Value("${com.task.management.base.url}")
+    private String baseUrl;
 
     @Transactional
     public ProjectDto save(Project project) {
@@ -43,7 +47,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         Project projectDb = projectRepository.save(project);
-        return ProjectDto.convertToDto(projectDb);
+        return ProjectDto.convertToDto(projectDb,baseUrl);
     }
 
     public ProjectDto getProject(Integer projectId) {
@@ -56,7 +60,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         if (UserUtil.isAdmin()) {
-            return ProjectDto.convertToDto(projectOpt.get());
+            return ProjectDto.convertToDto(projectOpt.get(),baseUrl);
         } else {
             String projectCreatedBy = projectOpt.get().getCreatedBy();
             if (!projectCreatedBy.equals(userName)) {
@@ -64,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
             }
         }
 
-        return ProjectDto.convertToDto(projectOpt.get());
+        return ProjectDto.convertToDto(projectOpt.get(),baseUrl);
 
     }
 
@@ -97,7 +101,7 @@ public class ProjectServiceImpl implements ProjectService {
             projects = projectRepository.findByCreatedBy(userName);
         }
 
-        return !projects.isEmpty() ? ProjectDto.convertToDto(projects) : new ArrayList<>();
+        return !projects.isEmpty() ? ProjectDto.convertToDto(projects,baseUrl) : new ArrayList<>();
     }
 
 }

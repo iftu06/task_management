@@ -37,7 +37,7 @@ public class TaskDto {
                 .id(task.getId())
                 .description(task.getDescription())
                 .dueDate(dueDate)
-                .project(ProjectDto.convertToDto(task.getProject()))
+                .project(ProjectDto.convertToDto(task.getProject(),baseUrl))
                 .status(task.getStatus())
                 .links(setLink(task,baseUrl))
                 .build();
