@@ -51,20 +51,16 @@ METHOD: POST
 
 
 Update Project:
-URL : localhost:8095/projects
-METHOD: POST
+URL : localhost:8095/projects/5
+METHOD: PUT
 
 	Request Body:
 
 		{
-
-			"id" : "5",
 			"name" : "Task Management"
-
 		}
 	
 	Response Body:
-
 		{
 		    "httpStatus": "CREATED",
 		    "body": {
@@ -74,7 +70,6 @@ METHOD: POST
 		    "message": "Project Created Successfully"
 		}
 
-	
 	UnAnuthorized user try to update the projetc:
 
 		{
@@ -197,13 +192,12 @@ METHOD: POST
 		}
 
 Update Task:
-URL : localhost:8095/tasks
-METHOD: POST
+URL : localhost:8095/tasks/32
+METHOD: PUT
 
 	Request Body:
 
 		{
-			"id": 32,
 			"description" : "Change Profile",
 			"project" : {
 				"id" : 3	

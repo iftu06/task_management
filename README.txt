@@ -17,6 +17,3 @@ Procedure to run the application
   and then put it in Authorization Header and then execute subsequent GET,POST,DELETE Operation.
 
 
-I didn't use java-11 because my machine  actually has limited resources with so many software installed.I do web and app development both,so my machine has intellij,androidstudio,gynom,mysql,nosql,visual studio etc.I am right now working with java-8 so installing and switching paralally  was hard for me within that resource.
-
-
