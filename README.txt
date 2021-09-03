@@ -16,4 +16,18 @@ Procedure to run the application
   You can acquire it by executing /login url(Instruction is in api_documentation)
   and then put it in Authorization Header and then execute subsequent GET,POST,DELETE Operation.
 
+  Couple of User:
+
+    userName:mainul,
+    password:123,
+    ROLE:USER
+
+    userName:iftekhar,
+    password:123
+    ROLE:ADMIN
+
+    userName:sabbir,
+    password:123
+    ROLE:USER
+
 

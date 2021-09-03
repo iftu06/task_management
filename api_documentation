@@ -12,6 +12,19 @@ METHOD: POST
 	Response:
 		{"token":"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYWludWwiLCJzY29wZXMiOlsiVVNFUiJdLCJleHAiOjE2MzAzMjQ5MTB9.duUKC2utTl1k-S0TyjZblcLjkhN71aK6W9L267tOYMZZeI5a2tOptiQ42VrG8vc52-qWunZG_g4ufl7QGT4-0w"}
 
+    userName:mainul,
+    password:123,
+    ROLE:USER
+
+    userName:iftekhar,
+    password:123
+    ROLE:ADMIN
+
+    userName:sabbir,
+    password:123
+    ROLE:USER
+
+    Generate Token Using this userName and password
 
 Create Project:
 URL : localhost:8095/projects
