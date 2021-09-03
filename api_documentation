@@ -94,7 +94,7 @@ METHOD: PUT
 			"name": "Task Management"
 		    },
 		    "status": "SUCCESS",
-		    "message": "Project Created Successfully",
+		    "message": "Project Updated Successfully",
             "links": [
                         {
                             "link": "http://localhost:8095/projects/5",
