@@ -5,7 +5,6 @@ import com.task.management.model.Priority;
 import com.task.management.model.ToDo;
 import com.task.management.model.ToDoStatus;
 import com.task.management.service.ToDoService;
-import com.task.management.service.ToDoServiceImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -13,8 +12,6 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.time.LocalDate;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,10 +35,12 @@ public class SpringRestApplicationTests {
                 .priority(Priority.HIGH.name())
                 .build();
         Mockito.when(toDoService.create(toDo)).thenReturn(toDoDto);
+        Assertions.assertNotNull(toDoService.create(toDo).getId());
         Assertions.assertEquals(1, toDoDto.getId());
         Assertions.assertEquals("HIGH", toDoService.create(toDo).getPriority());
         Assertions.assertEquals("STARTED", toDoService.create(toDo).getStatus().name());
         Assertions.assertNotNull(toDoService.create(toDo).getTitle());
+
     }
 
     @Test
