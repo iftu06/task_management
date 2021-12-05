@@ -12,4 +12,5 @@ public class ApiResponse {
     private Object body;
     private ReturnStatus status;
     private String message;
+    private String code;
 }
