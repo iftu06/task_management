@@ -1,591 +1,296 @@
 
-Login to generate jwt token:
-URL : localhost:8095/login
+
+Create ToDo:
+URL : localhost:8095/todos
 METHOD: POST
+Description:ToDo Status can not be set in the request body.it will be set as STARTED
+By the system during creation of ToDO,
 
 	Request Body:
 
 		{
-			"userName" : "mainul",
-			"password" : "123"
-		}
-	Response:
-		{"token":"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYWludWwiLCJzY29wZXMiOlsiVVNFUiJdLCJleHAiOjE2MzAzMjQ5MTB9.duUKC2utTl1k-S0TyjZblcLjkhN71aK6W9L267tOYMZZeI5a2tOptiQ42VrG8vc52-qWunZG_g4ufl7QGT4-0w"}
+        	"title" : "Discuss about deadline",
+            "description" : "Discuss about deadline",
+            "priority" : "HIGH"
 
-    userName:mainul,
-    password:123,
-    ROLE:USER
+        }
 
-    userName:iftekhar,
-    password:123
-    ROLE:ADMIN
-
-    userName:sabbir,
-    password:123
-    ROLE:USER
-
-    Generate Token Using this userName and password
-
-Create Project:
-URL : localhost:8095/projects
-METHOD: POST
-
-	Request Body:
-
-		{
-
-			"name" : "Task Management"
-
-		}
 
 	Response Body:
 
-		{
-		    "httpStatus": "CREATED",
-		    "body": {
-			"name": "Task Management"
-		    },
-		    "status": "SUCCESS",
-		    "message": "Project Created Successfully",
-            "links": [
-                            {
-                                "link": "http://localhost:8095/projects/5",
-                                "rel": "detail"
-                            },
-                            {
-                                "link": "http://localhost:8095/projects/5",
-                                "rel": "update"
-                            },
-                            {
-                                "link": "http://localhost:8095/projects/delete/5",
-                                "rel": "delete"
-                            }
-                    ]
-		}
-
-	Validation Error when Name is Empty:
-
-		{
-		    "httpStatus": "BAD_REQUEST",
-		    "body": {
-			"name": "Name can not be empty"
-		    },
-		    "status": "ERROR",
-		    "message": null
-		}
-
-
-
-
-Update Project:
-URL : localhost:8095/projects/5
-METHOD: PUT
-
-	Request Body:
-
-		{
-			"name" : "Task Management"
-		}
-	
-	Response Body:
-		{
-		    "httpStatus": "CREATED",
-		    "body": {
-			"name": "Task Management"
-		    },
-		    "status": "SUCCESS",
-		    "message": "Project Updated Successfully",
-            "links": [
-                        {
-                            "link": "http://localhost:8095/projects/5",
-                            "rel": "detail"
-                        },
-                        {
-                            "link": "http://localhost:8095/projects/5",
-                            "rel": "update"
-                        },
-                        {
-                            "link": "http://localhost:8095/projects/delete/5",
-                            "rel": "delete"
-                        }
-                ]
-		}
-
-	UnAnuthorized user try to update the projetc:
-
-		{
-		    "httpStatus": "FORBIDDEN",
-		    "body": null,
-		    "status": "ERROR",
-		    "message": "You are not authorized to access the resource"
-		}
-
-
-Get All Project:
-URL:localhost:8095/projects
-METHOD: GET
-Description: Admin user will be able fetch all the project but user will be able to fetch his created one
-
-
-	{
-        "httpStatus": "FOUND",
-        "body": [
-            {
-                "name": "Task Management",
+        {
+            "httpStatus": "CREATED",
+            "body": {
+                "id": 10,
+                "title": "Discuss about deadline",
+                "description": "Discuss about deadline",
+                "status": "STARTED",
+                "priority": "HIGH",
                 "links": [
                     {
-                        "link": "http://localhost:8095/projects/1",
+                        "link": "http://localhost:8095/todos/10",
                         "rel": "detail"
                     },
                     {
-                        "link": "http://localhost:8095/projects/1",
+                        "link": "http://localhost:8095/todos/10",
                         "rel": "update"
                     },
                     {
-                        "link": "http://localhost:8095/projects/delete/1",
+                        "link": "http://localhost:8095/todos/delete/10",
                         "rel": "delete"
                     }
                 ]
             },
-            {
-                "name": "Shop Management",
-                "links": [
-                    {
-                        "link": "http://localhost:8095/projects/2",
-                        "rel": "detail"
-                    },
-                    {
-                        "link": "http://localhost:8095/projects/2",
-                        "rel": "update"
-                    },
-                    {
-                        "link": "http://localhost:8095/projects/delete/2",
-                        "rel": "delete"
-                    }
-                ]
-            }
+            "status": "SUCCESS",
+            "message": "ToDO Created Successfully",
+            "code": null
+        }
 
-        ],
-        "status": "SUCCESS",
-        "message": null
-    }
-
-Get Project By Project Id:
-URL:localhost:8095/projects/4
-METHOD: GET
-Description: Admin user will be able fetch all the project but user will be able to fetch his created one
-
-	Response
-		{
-		    "httpStatus": "FOUND",
-		    "body": {
-			"name": "Task Management"
-		    },
-		    "status": "SUCCESS",
-		    "message": null,
-            "links": [
-                        {
-                            "link": "http://localhost:8095/projects/4",
-                            "rel": "detail"
-                        },
-                        {
-                            "link": "http://localhost:8095/projects/4",
-                            "rel": "update"
-                        },
-                        {
-                            "link": "http://localhost:8095/projects/delete/4",
-                            "rel": "delete"
-                        }
-                    ]
-		}
-
-
-Delete Project:
-URL:localhost:8095//projects/delete/5
-METHOD: DELETE
-Description: Admin Will be able to delete any project but user will only be able to delete his
-
-	Response body
-		{
-		    "httpStatus": "NO_CONTENT",
-		    "body": null,
-		    "status": "SUCCESS",
-		    "message": "Successfully deleted"
-		}
-
-	UnAnuthorized user try to update the projetc:
-		{
-		    "httpStatus": "FORBIDDEN",
-		    "body": null,
-		    "status": "ERROR",
-		    "message": "You are not authorized to access the resource"
-		}
-
-
-
-Create Taks:
-URL : localhost:8095/tasks
-METHOD: POST
-
-	Request Body:
+	Validation Error when title is Empty:
 
 		{
-			"description" : "Create Profile",
-			"project" : {
-				"id" : 3
-			},
+            "httpStatus": "BAD_REQUEST",
+            "body": {
+                "title": "Please enter a title"
+            },
+            "status": "ERROR",
+            "message": null,
+            "code": null
+        }
 
-			"status" : "in_progress",
-			"dueDate" : "2021-01-02"
 
-		}
 
-	Response Body:
 
-		{
-		    "httpStatus": "CREATED",
-		    "body": {
-			"id": 32,
-			"description": "Create Profile",
-			"project": {
-			    "name": "Webstore v2 v3"
-			},
-			"dueDate": "2021-01-04",
-			"status": "open"
-		    },
-		    "status": "SUCCESS",
-		    "message": "Task Created Successfully",
-            "links": [
-                    {
-                        "link": "http://localhost:8095/tasks/32",
-                        "rel": "detail"
-                    },
-                    {
-                        "link": "http://localhost:8095/tasks/32",
-                        "rel": "update"
-                    },
-                    {
-                        "link": "http://localhost:8095/tasks/delete/32",
-                        "rel": "delete"
-                    }
-                ]
-		}
-
-	Validation Error:
-
-		{
-		    "httpStatus": "BAD_REQUEST",
-		    "body": {
-			"description": "Description can not be  empty",
-			"status": "Status can not be empty"
-		    },
-		    "status": "ERROR",
-		    "message": null
-		}
-
-Update Task:
-URL : localhost:8095/tasks/32
+Update ToDo:
+URL : localhost:8095/todos/3
 METHOD: PUT
 
-	Request Body:
-
-		{
-			"description" : "Change Profile",
-			"project" : {
-				"id" : 3	
-			},
-
-			"status" : "in_progress",
-			"dueDate" : "2021-01-05"
-		}
-
-	Response Body:
-
-		{
-		    "httpStatus": "CREATED",
-		    "body": {
-			"id": 32,
-			"description": "Change Profile",
-			"project": {
-			    "name": "Webstore v2 v3"
-			},
-			"dueDate": "2021-01-05",
-			"status": "in_progress"
-		    },
-		    "status": "SUCCESS",
-		    "message": "Task Updated Successfully",
-            "links": [
-                    {
-                        "link": "http://localhost:8095/tasks/13",
-                        "rel": "detail"
-                    },
-                    {
-                        "link": "http://localhost:8095/tasks/13",
-                        "rel": "update"
-                    },
-                    {
-                        "link": "http://localhost:8095/tasks/delete/13",
-                        "rel": "delete"
-                    }
-                ]
-		}
+	{
+    	"title" : "Metting With Client",
+    	"description" : "Meeting With client",
+    	"priority" : "HIGH"
+    }
 	
-	Request to Update Close Task:
-		{
-		"id": 32,
-		"description" : "Change Profile",
-		"project" : {
-			"id" : 3	
-		},
+	Response Body:
+	{
+        "httpStatus": "CREATED",
+        "body": {
+            "id": 3,
+            "title": "Metting 11111111",
+            "description": "fafafaf",
+            "status": "STARTED",
+            "priority": "HIGH",
+            "links": [
+                {
+                    "link": "http://localhost:8095/todos/3",
+                    "rel": "detail"
+                },
+                {
+                    "link": "http://localhost:8095/todos/3",
+                    "rel": "update"
+                },
+                {
+                    "link": "http://localhost:8095/todos/delete/3",
+                    "rel": "delete"
+                }
+            ]
+        },
+        "status": "SUCCESS",
+        "message": "Todo Updated Successfully",
+        "code": null
+    }
 
-		"status" : "in_progress",
-		"dueDate" : "2021-01-05"
+Get All ToDos:
+URL:localhost:8095/todos
+METHOD: GET
+Description:All are sorted based on priority.
 
-		}
+{
+    "httpStatus": "FOUND",
+    "body": [
+        {
+            "id": 9,
+            "title": "Attend in Interview",
+            "description": "Attend in Bidding",
+            "status": "DONE",
+            "priority": "HIGH",
+            "links": [
+                {
+                    "link": "http://localhost:8095/todos/9",
+                    "rel": "detail"
+                },
+                {
+                    "link": "http://localhost:8095/todos/9",
+                    "rel": "update"
+                },
+                {
+                    "link": "http://localhost:8095/todos/delete/9",
+                    "rel": "delete"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Meeting 55555",
+            "description": "Meeting with Developer 55555",
+            "status": "DONE",
+            "priority": "LOW",
+            "links": [
+                {
+                    "link": "http://localhost:8095/todos/2",
+                    "rel": "detail"
+                },
+                {
+                    "link": "http://localhost:8095/todos/2",
+                    "rel": "update"
+                },
+                {
+                    "link": "http://localhost:8095/todos/delete/2",
+                    "rel": "delete"
+                }
+            ]
+        }
+    ],
+    "status": "SUCCESS",
+    "message": null,
+    "code": null
+}
 
-       Response to Update Close Task:
-		{
-		    "httpStatus": "BAD_REQUEST",
-		    "body": {
-			"status": "Closed Task can not be edited"
-		    },
-		    "status": "ERROR",
-		    "message": null
-		}
+Get ToDo By ToDo Id:
+URL:localhost:8095/todos/8
+METHOD: GET
 
-Get all Task:
-URL:localhost:8095/tasks/all
-Description : Admin can see all the task while user can only see his tasks.
+	Response
+    {
+        "httpStatus": "FOUND",
+        "body": {
+            "id": 8,
+            "title": "Attend in Bid",
+            "description": "Attend in Bidding",
+            "status": "DONE",
+            "priority": "MEDIUM",
+            "links": [
+                {
+                    "link": "http://localhost:8095/todos/8",
+                    "rel": "detail"
+                },
+                {
+                    "link": "http://localhost:8095/todos/8",
+                    "rel": "update"
+                },
+                {
+                    "link": "http://localhost:8095/todos/delete/8",
+                    "rel": "delete"
+                }
+            ]
+        },
+        "status": "SUCCESS",
+        "message": null,
+        "code": null
+    }
+
+
+Delete ToDo:
+URL:localhost:8095/todos/delete/5
+METHOD: DELETE
+
+	Response body
+	{
+        "httpStatus": "NO_CONTENT",
+        "body": null,
+        "status": "SUCCESS",
+        "message": "Successfully deleted",
+        "code": null
+    }
+
+
+Mark Todo as Done:
+URL:localhost:8095/todos/markAsDone/9
+METHOD: PUT
 
 	Response body:
 
-		{
-            "httpStatus": "FOUND",
-            "body": [
+    {
+        "httpStatus": "OK",
+        "body": {
+            "id": 9,
+            "title": "Attend in Interview",
+            "description": "Attend in Bidding",
+            "status": "DONE",
+            "priority": "HIGH",
+            "links": [
                 {
-                    "id": 4,
-                    "description": "Delete Task",
-                    "project": {
-                        "name": "Task Managemnt 123"
-                    },
-                    "dueDate": "2021-01-05",
-                    "status": "open",
-                    "links": [
-                        {
-                            "link": "http://localhost:8095/tasks/4",
-                            "rel": "detail"
-                        },
-                        {
-                            "link": "http://localhost:8095/tasks/4",
-                            "rel": "update"
-                        },
-                        {
-                            "link": "http://localhost:8095/tasks/delete/4",
-                            "rel": "delete"
-                        }
-                    ]
+                    "link": "http://localhost:8095/todos/9",
+                    "rel": "detail"
                 },
                 {
-                    "id": 3,
-                    "description": "Change Task",
-                    "project": {
-                        "name": "Shop Management"
-                    },
-                    "dueDate": "2021-01-05",
-                    "status": "open",
-                    "links": [
-                        {
-                            "link": "http://localhost:8095/tasks/3",
-                            "rel": "detail"
-                        },
-                        {
-                            "link": "http://localhost:8095/tasks/3",
-                            "rel": "update"
-                        },
-                        {
-                            "link": "http://localhost:8095/tasks/delete/3",
-                            "rel": "delete"
-                        }
-                    ]
+                    "link": "http://localhost:8095/todos/9",
+                    "rel": "update"
+                },
+                {
+                    "link": "http://localhost:8095/todos/delete/9",
+                    "rel": "delete"
                 }
-
-            ],
-            "status": "SUCCESS",
-            "message": null
-        }
-
-
-Search Task:
-URL:localhost:8095/tasks/search?dueDate=2021-02-01&&status=close&&projectId=3
-METHOD: GET
-Description : Admin can see all the task while user can only see his tasks
-
-	Response:
-	{
-        "httpStatus": "FOUND",
-        "body": [
-            {
-                "id": 3,
-                "description": "Change Task",
-                "project": {
-                    "name": "Shop Management"
-                },
-                "dueDate": "2021-01-05",
-                "status": "open",
-                "links": [
-                    {
-                        "link": "http://localhost:8095/tasks/3",
-                        "rel": "detail"
-                    },
-                    {
-                        "link": "http://localhost:8095/tasks/3",
-                        "rel": "update"
-                    },
-                    {
-                        "link": "http://localhost:8095/tasks/delete/3",
-                        "rel": "delete"
-                    }
-                ]
-            },
-            {
-                "id": 11,
-                "description": "Remove Shop1234",
-                "project": {
-                    "name": "Shop Management"
-                },
-                "dueDate": "2021-01-05",
-                "status": "open",
-                "links": [
-                    {
-                        "link": "http://localhost:8095/tasks/11",
-                        "rel": "detail"
-                    },
-                    {
-                        "link": "http://localhost:8095/tasks/11",
-                        "rel": "update"
-                    },
-                    {
-                        "link": "http://localhost:8095/tasks/delete/11",
-                        "rel": "delete"
-                    }
-                ]
-            }
-        ],
+            ]
+        },
         "status": "SUCCESS",
-        "message": null
+        "message": "TODO is completed",
+        "code": null
     }
 
-Get Task By Project Id:
-URL:localhost:8095/project/2/tasks
+Search ToDo:
+URL:localhost:8095/todos/search?status=DONE
 METHOD: GET
+Description : Get the todos which is done.All are sorted based on priority.
 
 	Response:
-		{
-            "httpStatus": "FOUND",
-            "body": [
-                {
-                    "id": 3,
-                    "description": "Change Task",
-                    "project": {
-                        "name": "Shop Management"
-                    },
-                    "dueDate": "2021-01-05",
-                    "status": "open",
-                    "links": [
-                        {
-                            "link": "http://localhost:8095/tasks/3",
-                            "rel": "detail"
-                        },
-                        {
-                            "link": "http://localhost:8095/tasks/3",
-                            "rel": "update"
-                        },
-                        {
-                            "link": "http://localhost:8095/tasks/delete/3",
-                            "rel": "delete"
-                        }
-                    ]
-                },
-                {
-                    "id": 11,
-                    "description": "Remove Shop1234",
-                    "project": {
-                        "name": "Shop Management"
-                    },
-                    "dueDate": "2021-01-05",
-                    "status": "open",
-                    "links": [
-                        {
-                            "link": "http://localhost:8095/tasks/11",
-                            "rel": "detail"
-                        },
-                        {
-                            "link": "http://localhost:8095/tasks/11",
-                            "rel": "update"
-                        },
-                        {
-                            "link": "http://localhost:8095/tasks/delete/11",
-                            "rel": "delete"
-                        }
-                    ]
-                }
-            ],
-            "status": "SUCCESS",
-            "message": null
-        }
-
-Get Task By Task Id:
-URL:localhost:8095/tasks/2
-METHOD: GET
-
+{
+    "httpStatus": "FOUND",
+    "body": [
         {
-            "httpStatus": "FOUND",
-            "body": {
-                "id": 13,
-                "description": "Create Manager",
-                "project": {
-                    "name": "Payroll Managemnt dd"
+            "id": 2,
+            "title": "Meeting 55555",
+            "description": "Meeting with Developer 55555",
+            "status": "DONE",
+            "priority": "HIGH",
+            "links": [
+                {
+                    "link": "http://localhost:8095/todos/2",
+                    "rel": "detail"
                 },
-                "dueDate": "2021-01-05",
-                "status": "open",
-                "links": [
-                    {
-                        "link": "http://localhost:8095/tasks/13",
-                        "rel": "detail"
-                    },
-                    {
-                        "link": "http://localhost:8095/tasks/13",
-                        "rel": "update"
-                    },
-                    {
-                        "link": "http://localhost:8095/tasks/delete/13",
-                        "rel": "delete"
-                    }
-                ]
-            },
-            "status": "SUCCESS",
-            "message": null
+                {
+                    "link": "http://localhost:8095/todos/2",
+                    "rel": "update"
+                },
+                {
+                    "link": "http://localhost:8095/todos/delete/2",
+                    "rel": "delete"
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "title": "Attend in Interview",
+            "description": "Attend in Bidding",
+            "status": "DONE",
+            "priority": "LOW",
+            "links": [
+                {
+                    "link": "http://localhost:8095/todos/9",
+                    "rel": "detail"
+                },
+                {
+                    "link": "http://localhost:8095/todos/9",
+                    "rel": "update"
+                },
+                {
+                    "link": "http://localhost:8095/todos/delete/9",
+                    "rel": "delete"
+                }
+            ]
         }
-
-
-
-Delete Task:
-URL:localhost:8095/tasks/delete/1
-METHOD: DELETE
-Description: Admin Will be able to delete any task but user will only be able to delete his
-
-	Response body
-		{
-		    "httpStatus": "NO_CONTENT",
-		    "body": null,
-		    "status": "SUCCESS",
-		    "message": "Successfully deleted"
-		}
-
-	UnAnuthorized user try to update the projetc:
-		{
-		    "httpStatus": "FORBIDDEN",
-		    "body": null,
-		    "status": "ERROR",
-		    "message": "You are not authorized to access the resource"
-		}
+    ],
+    "status": "SUCCESS",
+    "message": null,
+    "code": null
+}

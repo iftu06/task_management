@@ -1,0 +1,139 @@
+{
+	"variables": [],
+	"info": {
+		"name": "ToDO",
+		"_postman_id": "421b131e-88aa-66fd-cb5a-bba09133d9ce",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get_todos",
+			"request": {
+				"url": "{{url}}/todos",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "save_todo",
+			"request": {
+				"url": "{{url}}/todos",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\" : \"Meeting 999\",\n    \"description\" : \"Meeting with ACCOUNTS\",\n    \"priority\" : \"MEDIUM\"\n\n}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "update_todo",
+			"request": {
+				"url": "{{url}}/todos/3",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\" : \"Metting With Client\",\n\t\"description\" : \"Meeting With client\",\n\t\"priority\" : \"HIGH\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "delete_todo",
+			"request": {
+				"url": "{{url}}/todos/delete/1",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "markAsDone",
+			"request": {
+				"url": "{{url}}/todos/markAsDone/9",
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "get_todo",
+			"request": {
+				"url": "{{url}}/todos/8",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "search_todo",
+			"request": {
+				"url": {
+					"raw": "{{url}}/todos/search?status=DONE",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"todos",
+						"search"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "DONE",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"status\" : \"DONE\"\n\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

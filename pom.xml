@@ -9,7 +9,7 @@
   <packaging>war</packaging>
 
   <name>task-management</name>
-  <description>Demo project for Task Management</description>
+  <description>Demo project for Todo Management</description>
 
   <parent>
     <groupId>org.springframework.boot</groupId>

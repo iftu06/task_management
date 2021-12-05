@@ -82,10 +82,21 @@ public class ToDoController {
     @CrossOrigin
     @GetMapping(value = "/todos/{id}")
     public Object list(@PathVariable Integer id) {
-        ToDoDto toDoDto = toDoService.getToDo(id);
-        return ApiResponse.builder()
-                .body(toDoDto).status(ReturnStatus.SUCCESS)
-                .httpStatus(HttpStatus.FOUND).build();
+        try {
+            ToDoDto toDoDto = toDoService.getToDo(id);
+            return ApiResponse.builder()
+                    .body(toDoDto).status(ReturnStatus.SUCCESS)
+                    .httpStatus(HttpStatus.FOUND).build();
+
+        } catch (ToDoException exp) {
+            return ApiResponse.builder()
+                    .status(ReturnStatus.ERROR)
+                    .httpStatus(exp.getError().getHttpStatusCode())
+                    .message(exp.getError().getErrorMessage())
+                    .code(exp.getError().getErrorCode())
+                    .build();
+
+        }
 
     }
 

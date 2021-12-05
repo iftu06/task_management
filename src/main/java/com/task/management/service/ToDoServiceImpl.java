@@ -133,9 +133,10 @@ public class ToDoServiceImpl implements ToDoService {
 
         cq.where(predicates.toArray(new Predicate[0]));
 
-        List<ToDo> tasks = em.createQuery(cq).getResultList();
+        List<ToDo> todos = em.createQuery(cq).getResultList();
+        Collections.sort(todos);
 
-        return ToDoDto.convertToDto(tasks, baseUrl);
+        return ToDoDto.convertToDto(todos, baseUrl);
     }
 
     private List<Predicate> getPredicates(ToDoSearchField seachField,
